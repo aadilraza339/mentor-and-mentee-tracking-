@@ -11,9 +11,11 @@ class Signup_Page extends Component {
     this.state = {
       first_name: '',
       last_name: '',
+      UserName:'',
       email: '',
       password: ''
     }
+    
   }
   render() {
     return (
@@ -21,10 +23,13 @@ class Signup_Page extends Component {
         <MuiThemeProvider>
           <div>
             <AppBar title="SignUp Page" />
-            <Card style={{width:'30%', height:'50%', marginLeft:'40%', marginTop:'5%', border: '1px solid black'}}>
+            <h1>Create Account</h1>
+            <Card style={{ width: '30%', height: '50%', marginLeft: '40%', marginTop: '5%', border: '1px solid black' }}>
               <TextField hintText="Enter your First Name" floatingLabelText="First Name" />
               <br />
               <TextField hintText="Enter your Last Name" floatingLabelText="Last Name" />
+              <br />
+              <TextField hintText="Enter your UserName" floatingLabelText="UserName" />
               <br />
               <TextField hintText="Enter your Email" type="email" floatingLabelText="Email" />
               <br />
