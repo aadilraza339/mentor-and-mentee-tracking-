@@ -14,8 +14,37 @@ class Signup_Page extends Component {
       UserName:'',
       email: '',
       password: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    const { email, value } = e.target;
+    this.setState({ [email]: value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({ submitted: true });
+    const { email, password } = this.state;
+    if (email && password) {
+      this.props.login(email, password);
     }
-    
+
+    const data = new FormData();
+    data.append('file', this.uploadInput.files[0]);
+    data.append('filename', this.fileName.value);
+
+    fetch('http://localhost:3000/mentor_mentee/signup', {
+      method: 'POST',
+      body: data
+    }).then(response => {
+      response.json().then(body => {
+        this.setState({ imageURL: `http://localhost:3000/${body.file}` });
+      });
+    });
+
   }
   render() {
     return (

@@ -9,29 +9,43 @@ class Login_page extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        email: '',
-        password: '',
-        submitted: false
+      email: '',
+      password: '',
+      submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-}
-
-handleChange(e) {
-  const { email, value } = e.target;
-  this.setState({ [email]: value });
-}
-
-handleSubmit(e) {
-  e.preventDefault();
-
-  this.setState({ submitted: true });
-  const { email, password } = this.state;
-  if (email && password) {
-      this.props.login(email, password);
   }
-}
+
+  handleChange(e) {
+    const { email, value } = e.target;
+    this.setState({ [email]: value });
+  }
+  
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.setState({ submitted: true });
+    const { email, password } = this.state;
+    if (email && password) {
+      this.props.login(email, password);
+    }
+
+    const data = new FormData();
+    data.append('file', this.uploadInput.files[0]);
+    data.append('filename', this.fileName.value);
+
+    fetch('http://localhost:3000/mentor_mentee/login', {
+      method: 'POST',
+      body: data
+    }).then(response => {
+      response.json().then(body => {
+        this.setState({ imageURL: `http://localhost:3000/${body.file}` });
+      });
+    });
+
+  }
 
   render() {
     return (

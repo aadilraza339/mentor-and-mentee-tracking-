@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AppBar } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     AppBar: {
@@ -47,7 +48,9 @@ class Homepage extends Component {
                     <Button className={classes.Logout}>Logout</Button>
                 </AppBar>
                 <Button className={classes.Mentor}>Mentor </Button>
-                <Button className={classes.Mentee}>Mentee </Button>
+                < Link to="/Mentee" >
+                    <Button className={classes.Mentee}>Mentee</Button>
+                </Link>
             </div>
         )
     }
