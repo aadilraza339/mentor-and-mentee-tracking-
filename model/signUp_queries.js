@@ -10,8 +10,6 @@ let checkLoginEmail= (email) => {
    return knex.select('*').from('resgistration').havingIn('email', email)
 }
 
-// let checkLoginPassword= (data) => {
-//    return knex.select('*').from('resgistration').havingIn('password', data.password)
-// }
+
 
 module.exports = { postSignUpdata , checkLoginEmail} 
