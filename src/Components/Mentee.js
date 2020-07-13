@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Card, TextField, withStyles , CardContent , Box} from "@material-ui/core";
+import { Card, TextField, withStyles, CardContent } from "@material-ui/core";
 
 const styles = theme => ({
     card: {
-        height: 700,
+        height: 800,
         width: '50%',
-        marginTop: '7%',
+        marginTop: '4%',
         marginLeft: '25%',
         border: '1px solid black'
     },
     CardContent: {
         marginTop: '5%',
-        marginLeft: '10%',
-    }
-    
+    },
+    TextField: {
+        width: '100%',
+    },
 });
 
 class CardComponent extends Component {
@@ -23,32 +24,38 @@ class CardComponent extends Component {
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.CardContent}>
-                    <Box></Box>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
-                <br/>
-                <br/>
-                <TextField label="Mentee Name"  />
+                <button className={classes.button} onClick={() => { this.setState({ editing: true }); }}> Edit </button>
+                    <TextField className={classes.TextField} label="Mentee Name" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="Mentor Name" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="How much month spend here" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="Where is in study" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="How was study is going" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="English Mentor" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="From Where" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="How much she done" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="Mentor Problem" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="Study Schedule" />
+                    <br />
+                    <br />
+                    <TextField className={classes.TextField} label="How many hours doing study" />
                 </CardContent>
             </Card>
         );

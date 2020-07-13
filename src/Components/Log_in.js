@@ -1,72 +1,86 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Card from '@material-ui/core/Card';
+import React from 'react';
+import axios from 'axios';
+// import { Link } from 'react-router-dom';
 
-class Login_page extends Component {
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+
+const validateForm = errors => {
+  let valid = true;
+  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
+  return valid;
+};
+
+export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-      submitted: false
+      errors: {
+        email: '',
+        password: '',
+      }
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
-    const { email, value } = e.target;
-    this.setState({ [email]: value });
+  handleChange = (event) => {
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value });
+    let errors = this.state.errors;
   }
-  
-  handleSubmit(e) {
-    e.preventDefault();
 
-    this.setState({ submitted: true });
-    const { email, password } = this.state;
-    if (email && password) {
-      this.props.login(email, password);
-    }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const getData = axios.post("http://localhost:8000/mentor_mentee/login", {
+        email: this.state.email,
+        password: this.state.password, 
+    })
+      .then(res => {
+        console.log(res);
 
-    const data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
-    data.append('filename', this.fileName.value);
-
-    fetch('http://localhost:3000/mentor_mentee/login', {
-      method: 'POST',
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        this.setState({ imageURL: `http://localhost:3000/${body.file}` });
+        const n = axios.get('http://localhost:8000/mentor_mentee/verify',)
+          .then(respo => {
+            console.log(respo)
+            if (respo.data === true) {
+              window.location.href = "/Homepage";
+            } else {
+              window.location.href = "/";
+            }
+          });
+        this.setState({
+          loading: true
+        });
+        console.log(n)
+      })
+      .catch(err => {
+        console.log(err);
       });
-    });
-
   }
 
   render() {
+    const { errors } = this.state;
     return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-            <AppBar title="Login Page" />
-            <Card style={{ width: '30%', height: '50%', marginLeft: '40%', marginTop: '5%', border: '1px solid black' }}>
-              <TextField hintText="Enter your Email" type="email" floatingLabelText="Email" />
-              <br />
-              <TextField type="password" hintText="Enter your Password" floatingLabelText="Password" />
-              <br />
-              <RaisedButton label="Login" primary={true} style={style} />
-            </Card>
-          </div>
-        </MuiThemeProvider>
+      <div className='wrapper'>
+        <div className='form-wrapper'>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className='email'>
+              <label htmlFor="email">Email</label>
+              <input type='email' name='email' value={this.state.email} onChange={this.handleChange} />
+              {errors.email.length > 0 &&
+                <span className='error'>{errors.email}</span>}
+            </div>
+            <div className='password'>
+              <label htmlFor="password">Password</label>
+              <input type='password' name='password' value={this.state.password} onChange={this.handleChange} />
+              {errors.password.length > 0 &&
+                <span className='error'>{errors.password}</span>}
+            </div>
+            <button >Login</button>
+          </form>
+        </div>
       </div>
     );
   }
 }
-const style = {
-  margin: 15,
-};
-export default Login_page;

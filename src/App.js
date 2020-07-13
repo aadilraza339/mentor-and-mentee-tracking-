@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
+import Login from './Components/Log_in';
 import Signup from './Components/Sign_up';
 import Homepage from './Components/Homepage';
 import Mentee from './Components/Mentee';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from './Components/Log_in';
 
 function App() {
   return (
@@ -13,10 +13,10 @@ function App() {
         <div>
           <Switch>
             <Route path='/Login' component={Login} />
-            <Route path="/Signup" component={Signup}/>
-            <Route path="/Mentee" component={Mentee}/>
+            <Route path="/Mentee" component={Mentee} />
+            <Route path="/Homepage" component={Homepage}/>
             <Route path="/">
-            <Homepage/>
+            <Signup />
             </Route>
           </Switch>
         </div>

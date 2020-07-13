@@ -1,78 +1,90 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Card from '@material-ui/core/Card';
+import React from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
-class Signup_Page extends Component {
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+
+const validateForm = errors => {
+  let valid = true;
+  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
+  return valid;
+};
+
+export default class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: '',
-      last_name: '',
-      UserName:'',
-      email: '',
-      password: ''
+      FirstName: "",
+      LastName: "",
+      email: "",
+      password: "",
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleChange(e) {
-    const { email, value } = e.target;
-    this.setState({ [email]: value });
-  }
-
-  handleSubmit(e) {
+  handleChange = (e) => {
     e.preventDefault();
-    this.setState({ submitted: true });
-    const { email, password } = this.state;
-    if (email && password) {
-      this.props.login(email, password);
-    }
-
-    const data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
-    data.append('filename', this.fileName.value);
-
-    fetch('http://localhost:3000/mentor_mentee/signup', {
-      method: 'POST',
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        this.setState({ imageURL: `http://localhost:3000/${body.file}` });
-      });
-    });
-
+    this.setState({ [e.target.name]: e.target.value });
   }
+  Submit = (event) => {
+    event.preventDefault();
+    const newUser = {
+      FistName: this.state.FirstName,
+      LastName: this.state.LastName,
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    axios.post(
+      "http://localhost:8000/mentor_mentee/signup", newUser, {
+      params: {
+        fistName: this.state.FirstName,
+        LastName: this.state.LastName,
+        email: this.state.email,
+        password: this.state.password,
+      }
+    })
+      .then((res) => {
+        console.log(res.data)
+
+      }).catch((error) => {
+        console.log(error)
+
+      });
+  }
+
   render() {
+    const { FirstName, LastName, email, password } = this.state
+    console.log(this.state)
     return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-            <AppBar title="SignUp Page" />
-            <h1>Create Account</h1>
-            <Card style={{ width: '30%', height: '50%', marginLeft: '40%', marginTop: '5%', border: '1px solid black' }}>
-              <TextField hintText="Enter your First Name" floatingLabelText="First Name" />
-              <br />
-              <TextField hintText="Enter your Last Name" floatingLabelText="Last Name" />
-              <br />
-              <TextField hintText="Enter your UserName" floatingLabelText="UserName" />
-              <br />
-              <TextField hintText="Enter your Email" type="email" floatingLabelText="Email" />
-              <br />
-              <TextField type="password" hintText="Enter your Password" floatingLabelText="Password" />
-              <br />
-              <RaisedButton label="Signup" primary={true} style={style} />
-            </Card>
-          </div>
-        </MuiThemeProvider>
+      <div className='wrapper'>   
+        <div className='form-wrapper'>
+          <h2>Create Account</h2>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className='firstName'>
+              <label htmlFor="FirstName"> First Name</label>
+              <input type='text' name='FirstName' value={this.state.FirstName} onChange={this.handleChange} noValidate />
+            </div>
+            <div className='lastName'>
+              <label htmlFor="LastName"> Last Name</label>
+              <input type='text' name='LastName' value={this.state.LastName} onChange={this.handleChange} noValidate />
+            </div>
+            <div className='email'>
+              <label htmlFor="email">Email</label>
+              <input type='email' name='email' value={this.state.email} onChange={this.handleChange} noValidate />
+            </div>
+            <div className='password'>
+              <label htmlFor="password">Password</label>
+              <input type='password' name='password' value={this.state.password} onChange={this.handleChange} noValidate />
+            </div>
+
+            <Button variant="contained" color="primary" onClick={this.Submit} > Signup </Button>
+          </form>
+        </div>
       </div>
     );
   }
 }
-const style = {
-  margin: 15,
-};
-export default Signup_Page;
+
+
