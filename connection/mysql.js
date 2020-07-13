@@ -1,6 +1,5 @@
-result = (require('dotenv').config())
+result = require('dotenv').config();
 console.log(result)
-
 
 const connection = {
     client: 'mysql',

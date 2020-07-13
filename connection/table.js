@@ -1,13 +1,13 @@
 const knex = require('./mysql')
 
 
-knex.schema.hasTable('resgistration').then(function (exists) {
+knex.schema.hasTable('registration').then(function (exists) {
     if (!exists) {
-        knex.schema.createTable('resgistration', (table) => {
+        knex.schema.createTable('registration', (table) => {
             table.increments('id')
             table.string('firstname')
             table.string('lastname')
-            table.string('email')
+            table.string('email').unique()
             table.string('password')
         }).then(() => console.log("table created"))
             .catch((err) => { console.log(err); throw err })
