@@ -1,13 +1,13 @@
-result = require('dotenv').config()
-
+result = require('dotenv').config();
+console.log(result)
 
 const connection = {
     client: 'mysql',
     connection: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: 'Mentor_Mentee_Tracker'
+        host: process.env.host,
+        user: process.env.user,
+        password : process.env.password,
+        database : process.env.database
     }
 }
 
