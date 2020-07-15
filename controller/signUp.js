@@ -11,6 +11,7 @@ router.post('/signUp', function (req, res) {
         email: req.body.email,
         password: req.body.password
     }
+    console.log(data)
     queries.postSignUpdata(data).then((data) => {
         console.log(data)
         res.send(data)
@@ -23,6 +24,8 @@ router.post('/signUp', function (req, res) {
 router.post('/login', function (req, res) {
     email = req.body.email
     password = req.body.password
+    console.log(email)
+    console.log(password)
     queries.checkLoginEmail(email).then((response) => {
         if (response[0]["email"].length == 0) {
             res.send("invalid email")
