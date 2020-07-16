@@ -5,6 +5,7 @@ var queries = require('../model/signUp_queries')
 
 
 router.post('/signUp', function (req, res) {
+    console.log("------------------------")
     var data = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
