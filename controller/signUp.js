@@ -45,6 +45,19 @@ router.post('/login', function (req, res) {
     })
 })
 
+router.get('/verify', (req, res) => {
+    var token = req.query.token;
+    jwt.verify(token, 'rashmi', (err) => {
+        if (!err) {
+            res.send(true)
+        }
+        else {
+            res.send(false)
+        }
+    })
+})
+
+
 module.exports = router
 
 
