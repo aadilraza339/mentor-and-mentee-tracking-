@@ -1,13 +1,13 @@
- var express = require("express");
+const express = require("express");
 const bodyparser = require('body-parser')
-var app = express();
+const app = express();
+const signUp = require('./controller/signUp')
+const mentee_info = require('./controller/mentee_info')
+const cors = require('cors')
+
+app.use(cors())
 app.use(bodyparser.json())
-signUp = require('./controller/signUp')
-mentee_info = require('./controller/mentee_info')
-
-app.use('/mentor_mentee' , signUp)
-
-app.use('/mentor_mentee' , mentee_info)
+app.use('/mentor_mentee' , signUp , mentee_info)
 
 
 

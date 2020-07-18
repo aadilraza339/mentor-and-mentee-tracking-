@@ -4,21 +4,24 @@ const jwt = require('jsonwebtoken')
 var queries = require('../model/signUp_queries')
 
 
+
+
+
 router.post('/signUp', function (req, res) {
-    console.log("------------------------")
+    console.log(req.body)
     var data = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password
     }
-    console.log(data)
+    // console.log(data)
     queries.postSignUpdata(data).then((data) => {
         console.log(data)
         res.send(data)
     }).catch((err) => {
         console.log(err)
-        res.send(err)
+        res.send(err.code)
     })
 })
 
