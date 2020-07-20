@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Card, TextField, withStyles, CardContent } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = theme => ({
     card: {
-        height: 800,
+        height: 900,
         width: '50%',
         marginTop: '4%',
         marginLeft: '25%',
@@ -16,6 +18,21 @@ const styles = theme => ({
     TextField: {
         width: '100%',
     },
+    Button: {
+        marginTop: '6%',
+        background: 'black',
+        color: 'white',
+        width: '10%',
+        marginRight: '30%',
+        marginLeft: '30%'
+    },
+    EditIcon: {
+        marginLeft: '95%',
+        marginTop: '-3%',
+        width: '5%',
+        height: '40%'
+    }
+
 });
 
 class CardComponent extends Component {
@@ -24,7 +41,8 @@ class CardComponent extends Component {
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.CardContent}>
-                <button className={classes.button} onClick={() => { this.setState({ editing: true }); }}> Edit </button>
+                    <EditIcon className={classes.EditIcon}></EditIcon>
+
                     <TextField className={classes.TextField} label="Mentee Name" />
                     <br />
                     <br />
@@ -56,6 +74,7 @@ class CardComponent extends Component {
                     <br />
                     <br />
                     <TextField className={classes.TextField} label="How many hours doing study" />
+                    <Button className={classes.Button}>Submit</Button>
                 </CardContent>
             </Card>
         );
