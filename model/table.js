@@ -42,3 +42,22 @@ knex.schema.hasTable('mentee_info').then(function (exists) {
         console.log("table mentee_info created")
     }
 })
+
+knex.schema.hasTable('mentor_info').then(function(exists) {
+    if (!exists) {
+        knex.schema.createTable('mentor_info' , (table) => {
+            table.increments('mentor_id')
+            table.string('mentor_name')
+            table.string('mentee_name')
+            table.string('mentoring_duration')
+            table.string('improve_upon')
+            table.string('english_feedback')
+        }).then(() => {
+            console.log("table created")
+        }).catch((err) => {console.log(err) ;
+        throw err})
+    }
+    else{
+        console.log("table mentor_Info created")
+    }
+})

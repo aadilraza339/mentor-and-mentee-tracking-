@@ -1,4 +1,4 @@
-var knex = require('../connection/mysql')
+var knex = require('./mysql')
 
 
 
