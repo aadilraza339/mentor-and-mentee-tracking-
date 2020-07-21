@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
 var queries = require('../model/mentee_info_queries')
-console.log("mentee/controller")
 
 router.post('/mentee_info' ,function(req , res){
    data = {
