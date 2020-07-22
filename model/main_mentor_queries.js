@@ -1,4 +1,4 @@
-var knex = require('./mysql')
+var knex = require('../mysql')
 
 
 let getMentor = () => {

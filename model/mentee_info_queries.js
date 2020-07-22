@@ -1,4 +1,4 @@
-var knex = require('./mysql')
+var knex = require('../mysql')
 console.log("mentee/queries")
 
 let postMenteeInfo = (data) => {
