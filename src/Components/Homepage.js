@@ -47,7 +47,9 @@ class Homepage extends Component {
                 <AppBar className={classes.AppBar}>
                     <Button className={classes.Logout}>Logout</Button>
                 </AppBar>
-                <Button className={classes.Mentor}>Mentor </Button>
+                <Link to="/Mentor">
+                    <Button className={classes.Mentor}>Mentor </Button>
+                </Link>
                 < Link to="/Mentee" >
                     <Button className={classes.Mentee}>Mentee</Button>
                 </Link>

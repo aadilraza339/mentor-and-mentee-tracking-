@@ -6,12 +6,6 @@ const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
 
-const validateForm = errors => {
-  let valid = true;
-  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  return valid;
-};
-
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -34,8 +28,8 @@ export default class Login extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const getData = axios.post("http://localhost:8000/mentor_mentee/login", {
-        email: this.state.email,
-        password: this.state.password, 
+      email: this.state.email,
+      password: this.state.password,
     })
       .then(res => {
         console.log(res);
@@ -43,7 +37,7 @@ export default class Login extends React.Component {
         const n = axios.get('http://localhost:8000/mentor_mentee/verify',)
           .then(respo => {
             console.log(respo)
-            if (respo.data === true) {
+            if (respo.data.length !== 0) {
               window.location.href = "/Homepage";
             } else {
               window.location.href = "/";

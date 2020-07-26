@@ -1,19 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
 
-const validateForm = errors => {
-  let valid = true;
-  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  return valid;
-};
-
-export default class Signup extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +22,7 @@ export default class Signup extends React.Component {
       }
     };
   }
+
   handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -76,7 +70,7 @@ export default class Signup extends React.Component {
     axios.post(
       "http://localhost:8000/mentor_mentee/signUp", newUser)
       .then((res) => {
-        if (res.data === true) {
+        if (res.data.length !== 0) {
           window.location.href = "/login";
         } else {
           window.location.href = "/";
@@ -88,7 +82,6 @@ export default class Signup extends React.Component {
   }
 
   render() {
-    const { FirstName, LastName, email, password } = this.state
     const { errors } = this.state;
     console.log(this.state)
     return (
@@ -120,7 +113,6 @@ export default class Signup extends React.Component {
               {errors.password.length > 0 &&
                 <span className='error'>{errors.password}</span>}
             </div>
-
             <Button variant="contained" color="primary" onClick={this.Submit} > Signup </Button>
           </form>
         </div>
@@ -128,5 +120,4 @@ export default class Signup extends React.Component {
     );
   }
 }
-
-
+export default Signup;

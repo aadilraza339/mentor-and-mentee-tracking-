@@ -1,54 +1,51 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 
-const useStyles = makeStyles((theme) => ({
+const styles = ((theme) => ({
   Card: {
     width: '30%',
-    height: 100,
+    height: 50,
     marginTop: '2%',
     marginLeft: '35%',
     border: '1px solid black',
+    fontSize: '30px',
+    textAlign: 'center',
+    marginBottom: '3%'
   },
-  root: {
-    marginTop: '8%'
-  },
-  AddIcon: {
-    marginRight: '80%',
-    marginTop: '3%',
-    width: '10%',
-    height: '65%'
-  },
-  Typography: {
-    marginTop: '-11%',
-    fontSize: '30px'
-
-  }
 }));
 
-export default function SimpleCard() {
-  const classes = useStyles();
+class MainMentorPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mentor_name: '',
+      array: []
+    }
+  }
 
-  return (
-    <div className={classes.root}>
-      <Card className={classes.Card} >
-        <AddIcon className={classes.AddIcon}></AddIcon>
-        <Typography className={classes.Typography} > ADD New Mentor </Typography>
-      </Card>
-      <Card className={classes.Card}>
+  componentDidMount() {
+    axios
+      .get("http://localhost:8000/mentor_mentee/mentors")
+      .then(response => {
+        this.setState({ array: response.data, })
+      });
+  }
 
-      </Card>
-      <Card className={classes.Card}>
-
-      </Card>
-      <Card className={classes.Card}>
-
-      </Card>
-      <Card className={classes.Card}>
-
-      </Card>
-    </div>
-  );
+  render() {
+    const { classes, } = this.props;
+    const { array } = this.state;
+    return (
+      <div >
+        {array.map((array, index) => (
+          <div key={index} >
+            <Card className={classes.Card}>  {array.mentor_name} </Card>
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
+
+export default withStyles(styles)(MainMentorPage);
