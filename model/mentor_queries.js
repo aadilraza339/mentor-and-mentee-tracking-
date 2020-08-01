@@ -6,13 +6,7 @@ let mentorPostData = (data) => {
 }
 
 let mentorEditData = (data) => {
-    return knex('mentor_info').update({
-      mentor_name : data.mentor_name,
-      mentee_name : data.mentee_name ,
-      mentoring_duration : data.mentoring_duration ,
-      improve_upon : data.improve_upon ,
-      english_feedback : data.english_feedback
-    })
+    return knex('mentor_info').update(data)
 }
 
 let menteeSearch = (mentee_name)=>{

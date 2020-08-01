@@ -9,13 +9,7 @@ secret_key = process.env.SECRET_KEY
 
 
 router.post('/mentor_info', function (req, res) {
-    data = {
-        mentor_name: req.body.mentor_name,
-        mentee_name: req.body.mentee_name,
-        mentoring_duration: req.body.mentoring_duration,
-        improve_upon: req.body.improve_upon,
-        english_feedback: req.body.english_feedback
-    }
+    data = req.body
     queries.mentorPostData(data).then((response) => {
         console.log(response)
         res.send(response)
@@ -26,13 +20,7 @@ router.post('/mentor_info', function (req, res) {
 })
 
 router.put('/mentor_edit', function (req, res) {
-    data = {
-        mentor_name: req.body.mentor_name,
-        mentee_name: req.body.mentee_name,
-        mentoring_duration: req.body.mentoring_duration,
-        improve_upon: req.body.improve_upon,
-        english_feedback: req.body.english_feedback
-    }
+    data = req.body
     queries.mentorEditData(data).then((response) => {
         console.log(response)
         res.send(response)
