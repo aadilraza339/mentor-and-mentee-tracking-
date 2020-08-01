@@ -2,19 +2,14 @@ var express = require('express')
 var router = express.Router()
 const jwt = require('jsonwebtoken')
 var queries = require('../model/signUp_queries')
-
-
-
+require('dotenv').config()
+secret_key = process.env.SECRET_KEY
+console.log(secret_key)
 
 
 router.post('/signUp', function (req, res) {
     console.log(req.body)
-    var data = {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password
-    }
+    var data = req.body
     queries.postSignUpdata(data).then((response) => {
         res.send(response)
     }).catch((err) => {
@@ -36,11 +31,11 @@ router.post('/login', function (req, res) {
             } else {
                 user_password = response[0]["password"]
                 if (password == user_password) {
-                       name  = response[0]["firstname"],
+                        id = response[0]['id']
+                       username  = response[0]["username"],
                        email  = response[0]["email"],
-                       password = response[0]["password"]
 
-                    token = jwt.sign({email , password}, name)
+                    token = jwt.sign({username , email , id}, secret_key)
                     console.log(token)
                     res.cookie(token)
                     res.send('login successfull')
@@ -56,7 +51,7 @@ router.post('/login', function (req, res) {
 
 router.get('/verify', (req, res) => {
     var token = req.query.token;
-    jwt.verify(token, 'rashmi', (err) => {
+    jwt.verify(token, secret_key, (err) => {
         if (!err) {
             res.send(true)
         }

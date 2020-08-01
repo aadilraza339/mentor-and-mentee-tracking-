@@ -23,6 +23,10 @@ let getMenteeData = (key) => {
     return knex('mentee_info').select("*").where("mentor" , key)
 }
 
+let editMentee = (update_data , mentee_name) => {
+    return knex('mentee_info').update(update_data).where('mentee', mentee_name )
+}
 
 
-module.exports = { mentorPostData , mentorEditData, menteeSearch ,getMenteeData}
+
+module.exports = { mentorPostData , mentorEditData, menteeSearch ,getMenteeData , editMentee}
